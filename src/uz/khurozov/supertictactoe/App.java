@@ -9,7 +9,7 @@ public class App {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.getContentPane().add(new Game(frame));
+        frame.setContentPane(new Game(frame));
         frame.setSize(500, 500);
         frame.setResizable(false);
         frame.setVisible(true);

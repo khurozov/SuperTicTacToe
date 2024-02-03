@@ -5,7 +5,6 @@ import uz.khurozov.supertictactoe.constant.Player;
 import uz.khurozov.supertictactoe.constant.Pos;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -24,7 +23,6 @@ public class Game extends JComponent {
 
         for (Pos pos : Pos.values()) {
             SubGame subGame = new SubGame(this, pos);
-            subGame.setBorder(new LineBorder(Color.BLACK, 2));
             subGameMap.put(pos, subGame);
             add(subGame);
         }
@@ -41,6 +39,7 @@ public class Game extends JComponent {
         SubGame subGame = subGameMap.get(pos);
 
         if (subGame.isPlayable()) {
+            subGameMap.values().forEach(SubGame::disableForPlay);
             subGame.enableForPlay();
         } else {
             subGameMap.values().forEach(SubGame::enableForPlay);

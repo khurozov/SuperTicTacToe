@@ -16,10 +16,14 @@ public class SubGame extends JComponent {
     private final HashMap<Pos, Player> map;
     private boolean disabled;
 
+    private static final LineBorder ENABLED_BORDER = new LineBorder(Color.BLACK);
+    private static final LineBorder DISABLED_BORDER = new LineBorder(Color.GRAY);
+    private static final LineBorder ENABLED_BORDER_BOLD = new LineBorder(Color.BLACK, 2);
+    private static final LineBorder DISABLED_BORDER_BOLD = new LineBorder(Color.GRAY, 2);
+
     public SubGame(Game game, Pos subGamePos) {
-        disabled = false;
-        setLayout(new GridLayout(3, 3));
         map = new HashMap<>();
+        setLayout(new GridLayout(3, 3));
 
         for (Pos pos : Pos.values()) {
             JLabel cell = new JLabel();
@@ -41,10 +45,12 @@ public class SubGame extends JComponent {
                     }
                 }
             });
-            cell.setBorder(new LineBorder(Color.BLACK));
+            cell.setBorder(ENABLED_BORDER);
             cell.setHorizontalAlignment(JLabel.CENTER);
             add(cell);
         }
+
+        enableForPlay();
     }
 
     public boolean isPlayable() {
@@ -63,15 +69,23 @@ public class SubGame extends JComponent {
         if (!isPlayable()) return;
 
         disabled = false;
+        this.setBorder(ENABLED_BORDER_BOLD);
         for (Component c : getComponents()) {
-            c.setBackground(Color.YELLOW);
+            c.setForeground(Color.BLACK);
+            if (c instanceof JComponent jc) {
+                jc.setBorder(ENABLED_BORDER);
+            }
         }
     }
 
     public void disableForPlay() {
         disabled = true;
+        this.setBorder(DISABLED_BORDER_BOLD);
         for (Component c : getComponents()) {
-            c.setBackground(Color.BLUE);
+            c.setForeground(Color.GRAY);
+            if (c instanceof JComponent jc) {
+                jc.setBorder(DISABLED_BORDER);
+            }
         }
     }
 
